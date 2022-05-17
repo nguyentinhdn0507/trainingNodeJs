@@ -72,12 +72,11 @@ uploadRouter.post("/multiplefile", (req, res) => {
     let values = Object.values(result.insertedIds);
     values = values.map((value) => {
       return {
-        "url-ori": `http://localhost:3000/download/ori/${value}`,
-
+        "url-ori": `http://localhost:3000/download/original/${value}`,
         "url-resize": `http://localhost:3000/download/resize/${value}`,
       };
     });
-    res.send(values)
+    res.send(values);
   });
 });
 

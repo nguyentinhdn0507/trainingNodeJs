@@ -33,28 +33,29 @@ downLoadRouter.get("/resize/:id", async (req, res) => {
   console.log("meta", meta);
   const dir = `./uploads/${meta.filename}`;
   console.log("dir", dir);
-
   res.setHeader("Content-type", meta.mimetype);
   // res.setHeader("Content-disposition", `attachment; filename=TinhNguyen.jpg`);
   // step 3 : đọc file và gửi về client
   sharp(dir).resize(150, 150).pipe(res);
-  res.header('Content-Disposition', 'attachment; filename="' + meta.filename + '"');
+  res.header(
+    "Content-Disposition",
+    'attachment; filename="' + meta.filename + '"'
+  );
   console.log("file", req.file);
 });
 downLoadRouter.get("/original/:id", async (req, res) => {
-    // step 1 : lấy praram Id
-    const id = req.params.id;
-    // step 2 : lấy meta data của file từ database
-    let meta = await (await getDbInstance()).collection("uploads").findOne({
-      _id: new ObjectId(id),
-    });
-    console.log("meta", meta);
-    const dir = `./uploads/${meta.filename}`;
-    console.log("dir", dir);
-  
-    // res.setHeader("Content-type", meta.mimetype);
-    // res.setHeader("Content-disposition", `attachment; filename=TinhNguyen.jpg`);
-    // step 3 : đọc file và gửi về client
-    res.download(dir)
+  // step 1 : lấy praram Id
+  const id = req.params.id;
+  // step 2 : lấy meta data của file từ database
+  let meta = await (await getDbInstance()).collection("uploads").findOne({
+    _id: new ObjectId(id),
   });
+  console.log("meta", meta);
+  const dir = `./uploads/${meta.filename}`;
+  console.log("dir", dir);
+  // res.setHeader("Content-type", meta.mimetype);
+  // res.setHeader("Content-disposition", `attachment; filename=TinhNguyen.jpg`);
+  // step 3 : đọc file và gửi về client
+  res.download(dir);
+});
 module.exports = downLoadRouter;
