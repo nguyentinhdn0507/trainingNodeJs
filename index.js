@@ -1,5 +1,6 @@
 const express = require("express");
 const cron = require("node-cron");
+const cors = require("cors")
 const { transporter } = require("./trainsporter");
 require("dotenv").config();
 const { getDbInstance } = require("./db");
@@ -19,9 +20,11 @@ const main = async () => {
   await getDbInstance();
   const app = express();
   app.use(express.json());
+  app.use(cors())
   app.use("/users", userRouter);
   app.use("/upload", uploadRouter);
   app.use("/download", downLoadRouter);
+  // app.use("/data", dataUserRouter);
   app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
   });

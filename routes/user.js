@@ -35,6 +35,24 @@ userRouter.post("/", async (req, res) => {
   console.log("req", req);
   return res.status(200).end();
 });
+userRouter.post("/login", async (req, res) => {
+  console.log("body",req.body)
+  if (req.body.password.length < 5) {
+    return res.status(400).json({ message: "password invalid" }).end();
+  }
+  console.log(md5(req.body.password))
+  const user = await (await getDbInstance()).collection("users").findOne({
+    username: req.body.username,
+    password: md5(req.body.password),
+  });
+  console.log(user)
+  if (user) {
+    return res.status(200).json({ message: "Login success" }).end();
+  }else {
+    return res.status(400).json({ message: "User Name Or Password Wrong" }).end()
+  }
+  // console.log("req", req);
+});
 userRouter.put("/:id", async (req, res) => {
   try {
     const query = { _id: new mongo.ObjectID(req.params.id) };
