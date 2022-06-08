@@ -1,0 +1,51 @@
+1: componentwillmount thay thế bằng hook nào ?
+useEffect : 
+    step 1 : cập nhật lại state
+    step 2 : cập nhật lại DOM
+    step 3 : render lại UI
+    step 4 : gọi clean up nếu dependencies thay đổi
+    step 5 : gọi useEffect callback 
+
+useLayoutEffect : 
+    step 1 : cập nhật lại state
+    step 2 : cập nhật lại DOM
+    step 3 : gọi clean up nếu dependencies thay đổi (sync)
+    step 4 : gọi useLayoutEffect callback (sync)
+    step 5 : Render Lại UI
+các component : componentDidMount,componentDidUpdate,componentWillUnmount
+2: So sánh useEffect và uselayouteffect ?
+ custom hook không render giao diện và HOC thì render lại được giao diện
+3: HOC : high order component,
+    - 1 component nhận 1 component return ra 1 component
+    - mục đích : một logic đc lặp đi lặp
+4 nhược điểm của redux
+đưa local state thành global state =>  render nhiều lần
+5 reactquery giải quyết vấn đề nội tại của 1 component là gọi API
+- client state
+- global state
+- sever state
+context APi chia nhỏ ra nhiều global state
+common component 
+stateless :không có state,không quan tâm đến việc có dữ liệu hay không 
+và chỉ cần phải xử lý việc render  và kiểm soát re-render (function )
+statefull :có state và sử dụng được state (classcomponent)
+
+virtualDoom
+
+mỗi lần gọi đến hàm render của react thì nó sẽ tạo ra virtualDoom
+và virtualDoom sẽ so sánh RealDOOM và cái nào là cái khác biệt
+Quá trình so sánh cây DOM ảo hiện tại với cây trước đó được gọi là 'diffing'
+và sẽ update chính cái sự khác biệt  vào realdoom,
+khi component render chưa chắc DOM đã render trừ khi component đó gọi API or logic phức tạp
+
+Phân biệt useMemo useCallBack
+điểm chung đều catch lại giá trị
+useMemo giữ lại giá trị
+useCallBack giữ lại function
+
+nhược điểm tốn CPU để catch lại địa chỉ và tốn memory
+
+React.Memo và useCallback để làm cho component con không bị re-render
+tuy nhiên khi props là children thì vẫn bị render và cách khắc phục dùng useMemo
+
+custom control khó dành cho CSS
